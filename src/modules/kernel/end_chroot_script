@@ -6,6 +6,7 @@
 ########
 
 set -x
+set -e
 
 # Source error handling, leave this in place
 source /common.sh
@@ -50,13 +51,13 @@ function build_kernel(){
 pushd /home/pi
     pushd linux
 
-        if [ "$KERNEL_TYPE" == "both" ] || ["$KERNEL_TYPE"  == "v6" ]; then
+        if [ "$KERNEL_TYPE" == "both" ] || [ "$KERNEL_TYPE"  == "v6" ]; then
             build_kernel "kernel"
         fi
             
         make clean
         
-        if [ "$KERNEL_TYPE" == "both" ] || ["$KERNEL_TYPE"  == "v7" ]; then
+        if [ "$KERNEL_TYPE" == "both" ] || [ "$KERNEL_TYPE"  == "v7" ]; then
             build_kernel "kernel7"
         fi
     
@@ -66,7 +67,7 @@ pushd /home/pi
     
     if [ "$KERNEL_SOURCE_CLEANUP" == "yes" ]; then
         rm -rf linux
-	rm "${KERNEL_COMMIT}.zip"
+	rm "${KERNEL_COMMIT}.tar.gz"
     fi
     
     echo "$KERNEL_COMMIT" > /etc/kernel_commit
